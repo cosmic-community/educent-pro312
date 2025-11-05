@@ -6,8 +6,7 @@ import type {
   Attendance, 
   Reward, 
   Notice,
-  CosmicResponse,
-  hasStatus
+  CosmicResponse
 } from '@/types';
 
 export const cosmic = createBucketClient({
@@ -37,6 +36,11 @@ export async function getInstitutes(): Promise<Institute[]> {
     console.error('Error fetching institutes:', error);
     throw new Error('Failed to fetch institutes');
   }
+}
+
+// Fetch all users (convenience function for backward compatibility)
+export async function getUsers(): Promise<User[]> {
+  return getUsersByRole();
 }
 
 // Fetch users by role

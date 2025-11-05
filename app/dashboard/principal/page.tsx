@@ -1,4 +1,5 @@
 import { getInstitutes, getUsers, getRewards, getNotices } from '@/lib/cosmic';
+import { User, Notice, Reward } from '@/types';
 import InstituteOverview from '@/components/InstituteOverview';
 
 export default async function PrincipalDashboard() {
@@ -30,7 +31,7 @@ export default async function PrincipalDashboard() {
           <div className="bg-white rounded-xl shadow-card p-6">
             <h3 className="text-lg font-semibold mb-4">Staff Overview</h3>
             <div className="space-y-3">
-              {users.filter(u => u.metadata?.role?.value === 'LECTURER').slice(0, 5).map((lecturer) => (
+              {users.filter((u: User) => u.metadata?.role?.value === 'LECTURER').slice(0, 5).map((lecturer: User) => (
                 <div key={lecturer.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-3">
                     {lecturer.metadata?.avatar?.imgix_url ? (
@@ -68,7 +69,7 @@ export default async function PrincipalDashboard() {
               <button className="text-principal hover:underline text-sm">View All</button>
             </div>
             <div className="space-y-3">
-              {notices.slice(0, 3).map((notice) => (
+              {notices.slice(0, 3).map((notice: Notice) => (
                 <div key={notice.id} className="border-l-4 border-principal pl-4 py-2">
                   <p className="font-medium">{notice.metadata?.title || notice.title}</p>
                   <p className="text-sm text-gray-600 mt-1">
@@ -90,9 +91,9 @@ export default async function PrincipalDashboard() {
             <h3 className="text-lg font-semibold mb-4">Rewards Pending Review</h3>
             <div className="space-y-3">
               {rewards
-                .filter(r => r.metadata?.status?.value === 'PENDING_PRINCIPAL')
+                .filter((r: Reward) => r.metadata?.status?.value === 'PENDING_PRINCIPAL')
                 .slice(0, 5)
-                .map((reward) => (
+                .map((reward: Reward) => (
                   <div key={reward.id} className="p-3 bg-purple-50 rounded-lg">
                     <p className="font-medium text-sm">{reward.title}</p>
                     <p className="text-xs text-gray-600 mt-1">
@@ -103,7 +104,7 @@ export default async function PrincipalDashboard() {
                     </button>
                   </div>
                 ))}
-              {rewards.filter(r => r.metadata?.status?.value === 'PENDING_PRINCIPAL').length === 0 && (
+              {rewards.filter((r: Reward) => r.metadata?.status?.value === 'PENDING_PRINCIPAL').length === 0 && (
                 <p className="text-sm text-gray-500 text-center py-4">No pending rewards</p>
               )}
             </div>
@@ -115,7 +116,7 @@ export default async function PrincipalDashboard() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-gray-600">Total Staff:</span>
-                <span className="font-bold">{users.filter(u => u.metadata?.role?.value === 'LECTURER').length}</span>
+                <span className="font-bold">{users.filter((u: User) => u.metadata?.role?.value === 'LECTURER').length}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Active Notices:</span>
@@ -124,7 +125,7 @@ export default async function PrincipalDashboard() {
               <div className="flex justify-between">
                 <span className="text-gray-600">Pending Reviews:</span>
                 <span className="font-bold text-principal">
-                  {rewards.filter(r => r.metadata?.status?.value === 'PENDING_PRINCIPAL').length}
+                  {rewards.filter((r: Reward) => r.metadata?.status?.value === 'PENDING_PRINCIPAL').length}
                 </span>
               </div>
             </div>
